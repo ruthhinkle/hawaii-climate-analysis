@@ -1,4 +1,4 @@
-# Climate Analysis: Hawaii Weather Data
+# Climate Analysis: Hawaii Weather
 
 ![Hawaii Skyline Weather Photo](https://github.com/ruthhinkle/sqlalchemy-challenge/blob/main/Images/hawaii.jpg)
 
