@@ -43,9 +43,6 @@ inspector.get_table_names()
 measurement = Base.classes.measurement
 station = Base.classes.station
 
-columns_measurement = inspector.get_columns('measurement')
-columns_station = inspector.get_columns('station')
-
 # CREATE FLASK ROUTES
 # ~~~~~~~~~~~~~~~~~~~~~~~
 @app.route("/")
@@ -58,10 +55,16 @@ def precipitation():
     # Create session
     session = Session(engine)
 
-    # ADD COMMENTS   
+    # Find last date string 
     last_date_string = session.query(measurement.date).all()[-1][0]
+    
+    # Create variable for one year ago
     one_year_ago = dt.date(int(last_date_string[0:4])-1,int(last_date_string[5:7]), int(last_date_string[8:]))
+    
+    # Perform query to get data and precipitation data
     data_scores = session.query(measurement.date,measurement.prcp).filter(measurement.date>=one_year_ago).all()
+    
+    # Save query as dataframe
     precip_data = jsonify(pd.DataFrame(data_scores).sort_values('date').to_dict())
  
     # Close session
